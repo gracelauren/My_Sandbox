@@ -3,7 +3,7 @@ server {
   server_name localhost;
 
   root /var/www/src/;
-  index index.erb index.html;
+  index index.py index.html;
 
   # Important for VirtualBox
   sendfile off;
