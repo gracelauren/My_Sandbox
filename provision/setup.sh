@@ -30,4 +30,10 @@ sudo pip install virtualenv
 echo "Installing virtualenvwrapper"
 sudo pip install virtualenvwrapper
 
+echo "Creating the virtual environment for Python and Django"
+virtualenv env
+
+echo "Installing packages with respected versions"
+sudo pip install -r requirements.txt
+
 echo "Finished provisioning."
