@@ -41,8 +41,8 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
   # config.vm.synced_folder "./", "/var/www", create: true, group: "www-data", owner: "www-data"
-  config.vm.synced_folder("vagrant-docker", "/vagrant")
-
+  config.vm.synced_folder "./src", "/home/vagrant/"
+  config.vm.synced_folder "./salt/roots/", "/srv/salt/"
 
   #Add a bit more memory
   config.vm.provider :virtualbox do |vb|
@@ -57,14 +57,12 @@ Vagrant.configure(2) do |config|
   # end
 
   # Enable provisioning with a shell script
-  config.vm.provision "shell", path: "provision/setup.sh"
+  # config.vm.provision "shell", path: "provision/setup.sh"
 
-  #Provision with Docker
-  config.vm.provision "docker" do |d|
-    # build image from ubuntu base
-    d.pull_images "ubuntu:trusty"
-    # d.pull_images "mysql:5.6.20"
-    d.build_image "/vagrant", args: "-t django/project"
+  # Enable provisioning with salt
+  config.vm.provision :salt do |salt|
+    salt.minion_config = "salt/minion"
+    salt.run_highstate = true
   end
 
 end
